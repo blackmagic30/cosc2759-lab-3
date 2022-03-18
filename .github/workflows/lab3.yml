@@ -18,4 +18,11 @@ jobs:
           node-version: "16"
           cache: "npm"
       - run: npm clean-install
-      - run: npm pack
+
+      - if: github.ref == 'refs/heads/main'
+       run: npm pack
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: node-todo-${{ github.sha }}
+          path: ./*.tgz
